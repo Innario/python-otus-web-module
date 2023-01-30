@@ -1,4 +1,5 @@
 import os
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -18,7 +19,8 @@ def pytest_addoption(parser):
     )
     parser.addoption(
         "--url",
-        default="http://192.168.31.50:8081/",
+        default="http://192.168.31.50:8081",
+        action="store",
         help="This is opencart App"
     )
 
