@@ -37,3 +37,14 @@ class MainPage(BasePage):
     def open_register_page(self):
         self.browser.find_element(By.CSS_SELECTOR, ".fa.fa-user").click()
         self.browser.find_element(By.LINK_TEXT, "Register").click()
+
+    def change_currency(self, to):
+        self.click(By.CSS_SELECTOR, ".btn.btn-link.dropdown-toggle")
+        self.click(By.CSS_SELECTOR, f"[name={to}]")
+
+    def get_product_prices(self):
+        prices = []
+        for element in self.get_elements(By.CSS_SELECTOR, ".price"):
+            product_price = element.text.split("\n")
+            prices.extend(product_price)
+        return prices

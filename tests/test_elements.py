@@ -1,5 +1,3 @@
-import time
-
 from page_objects.admin_page import AdminPage
 from page_objects.desktops_catalog import DesktopsCatalog
 from page_objects.main_page import MainPage
@@ -39,7 +37,6 @@ def test_product_page(browser):
 
 def test_admin_login_page(browser):
     admin_page = AdminPage(browser)
-    time.sleep(2)
     assert admin_page.is_username_input_found()
     assert admin_page.is_password_input_found()
     assert admin_page.is_forgotten_link_found()
