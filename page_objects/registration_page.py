@@ -23,6 +23,7 @@ class RegistrationPage(BasePage):
         return self.is_element_found(By.CSS_SELECTOR, "[value=Continue]")
 
     def fill_registration_form(self, f_name, l_name, email, phone, password):
+        self.logger.info("Filling out the registration form")
         self.input(By.CSS_SELECTOR, "#input-firstname", f_name)
         self.input(By.CSS_SELECTOR, "#input-lastname", l_name)
         self.input(By.CSS_SELECTOR, "#input-email", email)
@@ -34,4 +35,5 @@ class RegistrationPage(BasePage):
         self.click(By.CSS_SELECTOR, ".btn.btn-primary")
 
     def is_new_user_created(self):
+        self.logger.info("Checking the creation of a new user")
         return self.is_element_visible(By.CSS_SELECTOR, "#content > h2")
