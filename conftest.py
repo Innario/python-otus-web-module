@@ -1,4 +1,5 @@
 import os
+import random
 
 import pytest
 from selenium import webdriver
@@ -60,3 +61,15 @@ def browser(request):
     driver.url = url
 
     return driver
+
+
+@pytest.fixture
+def random_user():
+    class UserData:
+        f_name = f"testName{random.randint(0, 9999)}"
+        l_name = "testlastName"
+        email = f"test_{random.randint(0, 9999)}@mail.com"
+        phone = "78090389499"
+        password = "pass1"
+
+    return UserData()
