@@ -16,7 +16,6 @@ class BasePage:
         file_handler.setFormatter(logging.Formatter('%(name)s - %(levelname)s - %(message)s'))
         self.logger.setLevel(logging.DEBUG)
         self.logger.addHandler(file_handler)
-        # self.logger.setLevel(level=self.browser.log_level)
 
     @allure.step("Clicking element {locator}")
     def click(self, locator, selector):
@@ -32,6 +31,13 @@ class BasePage:
             return True
         except Exception as ex:
             self.logger.error(f"Element {selector} by {locator} not found: {ex}")
+            allure.attach(f"Element {selector} by {locator} not found: {ex}")
+            allure.attach(
+                body=self.browser.get_screenshot_as_png(),
+                name="screenshot",
+                attachment_type=allure.attachment_type.PNG
+            )
+
             return False
 
     @allure.step("Getting elements")
@@ -43,6 +49,13 @@ class BasePage:
         except Exception as ex:
             self.logger.error(f"Elements {selector} by {locator} not found: {ex}")
             allure.attach(f"Elements {selector} by {locator} not found: {ex}")
+
+            allure.attach(
+                body=self.browser.get_screenshot_as_png(),
+                name="screenshot",
+                attachment_type=allure.attachment_type.PNG
+            )
+
             return []
 
     @allure.step("Getting an element")
@@ -53,6 +66,13 @@ class BasePage:
         except Exception as ex:
             self.logger.error(f"Element by {locator} not found: {ex}")
             allure.attach(f"Element by {locator} not found: {ex}")
+
+            allure.attach(
+                body=self.browser.get_screenshot_as_png(),
+                name="screenshot",
+                attachment_type=allure.attachment_type.PNG
+            )
+
             return
 
     @allure.step("Checking the visibility of an element")
@@ -64,6 +84,13 @@ class BasePage:
         except Exception as ex:
             self.logger.error(f"Element {selector} by {locator} not visible: {ex}")
             allure.attach(f"Element {selector} by {locator} not visible: {ex}")
+
+            allure.attach(
+                body=self.browser.get_screenshot_as_png(),
+                name="screenshot",
+                attachment_type=allure.attachment_type.PNG
+            )
+
             return False
 
     @allure.step("Input {value} in input {locator}")
