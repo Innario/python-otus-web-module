@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# Allow files and directories
+!/tests/
+!/page_objects/
+!/logs/
+!/conftest.py
+!/pytest.ini
+!/requirements.txt
