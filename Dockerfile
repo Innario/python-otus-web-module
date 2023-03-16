@@ -11,6 +11,9 @@ WORKDIR /app
 # Для того чтобы не пересобирать их каждый раз при сборке образа
 COPY requirements.txt .
 
+# Создаем папку для записи логов
+RUN mkdir -p logs
+
 # Установка зависимостей
 RUN pip install -U pip
 RUN pip install -r requirements.txt
