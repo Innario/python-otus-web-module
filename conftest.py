@@ -17,11 +17,13 @@ def pytest_addoption(parser):
     parser.addoption("--headless", action="store_true")
     parser.addoption("--url", default="http://192.168.31.50:8081", action="store", help="This is opencart App")
     parser.addoption("--vnc", action="store_true", default=True)
+    parser.addoption("--bv")
 
 
 @pytest.fixture
 def browser(request):
     browser = request.config.getoption("--browser")
+    version = request.config.getoption("--bv")
     executor = request.config.getoption("--executor")
     driver_path = request.config.getoption("--driver_path")
     headless = request.config.getoption("--headless")
@@ -51,6 +53,7 @@ def browser(request):
     else:
         capabilities = {
             "browserName": browser,
+            "browserVersion": version,
             "selenoid:options": {
                 "name": "Inna",
                 "enableVNC": vnc,
