@@ -3,6 +3,7 @@ import logging
 import allure
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -20,6 +21,12 @@ class BasePage:
     @allure.step("Clicking element {locator}")
     def click(self, locator, selector):
         element = self.get_element(locator, selector)
+        ActionChains(self.browser).move_to_element(element).pause(0.5).click().perform()
+        return element
+
+    @allure.step("Clicking random element {locator}")
+    def click_random_element(self, locator, selector):
+        element = self.get_elements(locator, selector)
         ActionChains(self.browser).move_to_element(element).pause(0.5).click().perform()
         return element
 
@@ -99,3 +106,7 @@ class BasePage:
         element.clear()
         element.send_keys(value)
         allure.attach(f"Clicked element {selector}")
+
+    def select_by_text(self, locator, selector, text):
+        select = Select(self.browser.find_element(locator, selector))
+        select.select_by_visible_text(text)

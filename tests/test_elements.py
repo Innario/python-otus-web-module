@@ -1,5 +1,5 @@
 from page_objects.admin_page import AdminPage
-from page_objects.desktops_catalog import DesktopsCatalog
+from page_objects.catalog_page import CatalogPage
 from page_objects.main_page import MainPage
 from page_objects.product_page import ProductPage
 from page_objects.registration_page import RegistrationPage
@@ -16,8 +16,8 @@ def test_main_page(browser):
 
 def test_catalog_elements(browser):
     main_page = MainPage(browser)
-    main_page.click_all_desktops_from_menu()
-    desktops_catalog = DesktopsCatalog(browser)
+    main_page.click_show_all_from_menu("Desktops", "Show All Desktops")
+    desktops_catalog = CatalogPage(browser)
     assert desktops_catalog.is_list_view_icon_found()
     assert desktops_catalog.is_product_visible()
     assert desktops_catalog.is_banner_visible()
@@ -25,7 +25,7 @@ def test_catalog_elements(browser):
 
 def test_product_page(browser):
     main_page = MainPage(browser)
-    main_page.click_product()
+    main_page.click_product("Apple Cinema 30\"")
     product_page = ProductPage(browser)
 
     assert product_page.is_fa_hearts_found()
