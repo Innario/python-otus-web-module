@@ -4,6 +4,8 @@ import random
 
 import allure
 import pytest
+import requests
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -80,6 +82,27 @@ def browser(request):
     driver.url = url
 
     return driver
+
+
+@pytest.fixture
+def url(request):
+    return request.config.getoption("--url")
+
+
+@pytest.fixture
+def api_token(request):
+    assert load_dotenv()
+    response = requests.Session().post(
+        f'{request.config.getoption("--url")}/index.php?route=api/login',
+        data={
+            'username': os.environ.get("api_user"),
+            'key': os.environ.get("api_key"),
+        }
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data
+    return response.json()['api_token']
 
 
 @pytest.fixture
