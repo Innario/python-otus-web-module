@@ -91,12 +91,17 @@ def url(request):
 
 @pytest.fixture
 def api_token(request):
-    assert load_dotenv()
+    load_dotenv()
+    key = os.environ.get("API_KEY")
+    username = os.environ.get("API_USER")
+    assert key is not None, "Cant find api key for opencart in environment variables"
+    assert username is not None, "Cant find api username for opencart in environment variables"
+
     response = requests.Session().post(
         f'{request.config.getoption("--url")}/index.php?route=api/login',
         data={
-            'username': os.environ.get("api_user"),
-            'key': os.environ.get("api_key"),
+            'username': username,
+            'key': key,
         }
     )
     assert response.status_code == 200

@@ -5,7 +5,7 @@
 - Browser version (CMD_BROWSER_V="109")
 - Executor (CMD_EXECUTOR="192.168.31.50")
 - OpenCart url (CMD_OPENCART_URL=http://192.168.31.50:8081)
-- Test filters (test: -k test_add_new_product_in_admin) (CMD_TEST_FILTERS="tests"/) */
+- Test filters (test: -k test_add_new_product_in_admin) (CMD_TEST_FILTERS="tests"/)*/
 
 pipeline {
     agent any
@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker run --name ${CONTAINER_NAME} ${IMAGE_NAME} --url ${CMD_OPENCART_URL} --executor ${CMD_EXECUTOR} -n ${CMD_THREADS} --browser ${CMD_BROWSER} --bv ${CMD_BROWSER_V} ${CMD_TEST_FILTERS}'
+                sh 'docker run -e API_KEY=${API_KEY} -e API_USER=${API_USER} --name ${CONTAINER_NAME} ${IMAGE_NAME} --url ${CMD_OPENCART_URL} --executor ${CMD_EXECUTOR} -n ${CMD_THREADS} --browser ${CMD_BROWSER} --bv ${CMD_BROWSER_V} ${CMD_TEST_FILTERS}'
                 sh 'docker cp ${CONTAINER_NAME}:/app/allure-results .'
             }
             post{
